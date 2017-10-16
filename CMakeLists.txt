@@ -1,0 +1,53 @@
+cmake_minimum_required (VERSION 3.1)
+
+project (gl_tutengine)
+set (EXEC_NAME GLeng)
+
+set (EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin")
+set (LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
+set (MY_LIBS "${PROJECT_SOURCE_DIR}/code")
+set (ASSIMP_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/assimp/include")
+set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmodules")
+
+message ("system name: " ${CMAKE_SYSTEM})
+message ("system processor: " ${CMAKE_SYSTEM_PROCESSOR})
+
+# setting external libs' variables
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	set (SYSWINDOWS 1)
+	set (CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/win")
+
+	# manually setting include/library variables
+	set (GLAD_SOURCE ${PROJECT_SOURCE_DIR}/win/glad/src/glad.c)
+	set (GLAD_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/win/glad/include)
+	set (SDL2_LIBRARY SDL2 SDL2_image)
+	set (SDL2_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/win/SDL2/include/SDL2)
+	message ("detected Windows system")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	set (SYSLINUX 1)
+	set (SYSUNIX 1)
+
+	find_package (OPNEGL REQUIRED)
+	set (GLAD_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/win/glad/include)
+	find_package (SDL2 REQUIRED)
+	find_package (SDL2_image REQUIRED)
+	message ("detected Linux system")
+else()
+	set (SYSMAC 1)
+	set (SYSUNIX 1)
+
+	find_package (OPENGL REQUIRED)
+	# GLEW variables are null
+	find_package (SDL2 REQUIRED)
+	find_package (SDL2_image REQUIRED)
+	message ("detected macOS")
+endif()
+
+# assimp build settings
+#set (GLM_STATIC_LIBRARY_ENABLE ON CACHE BOOL "" FORCE)
+#set (ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+#set (ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+#set (BUILD_ASSIMP_SAMPLES OFF CACHE BOOL "" FORCE)
+
+#add_subdirectory(assimp)
+add_subdirectory(${MY_LIBS})
