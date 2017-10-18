@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <SDL_image.h>
 #include <iostream>
+#include "oglin.h"
 
 SDL_Window *Window::window_ptr;
 SDL_GLContext Window::context;

@@ -5,8 +5,9 @@ endif()
 add_executable (${EXEC_NAME} "MainComponent.cpp")
 add_library (glad STATIC ${GLAD_SOURCE} ${GLAD_INCLUDE_DIR}/glad/glad.h ${GLAD_INCLUDE_DIR}/KHR/khrplatform.h)
 add_library (gl_tutengine STATIC
-	Window.cpp
-	Window.h)
+	Window.cpp Time.cpp Game.cpp
+	Window.h   Time.h   Game.h
+	oglin.h)
 
 target_link_libraries (${EXEC_NAME} gl_tutengine)
 target_link_libraries (gl_tutengine glad ${OPENGL_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} opengl32)

@@ -1,5 +1,4 @@
 #pragma once
-#include <glad\glad.h>
 #include <SDL.h>
 
 class Window {
@@ -8,6 +7,11 @@ public:
 
 	static void render() {
 		SDL_GL_SwapWindow(window_ptr);
+	}
+	static void dispose() {
+		SDL_GL_DeleteContext(context);
+		SDL_DestroyWindow(window_ptr);
+		SDL_Quit();
 	}
 
 	static bool isCloseRequested();
