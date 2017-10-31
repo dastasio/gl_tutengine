@@ -5,6 +5,7 @@
 
 SDL_Window *Window::window_ptr;
 SDL_GLContext Window::context;
+bool Window::close_requested;
 
 Window& Window::NewWindow(int width, int height, const char* title) {
 	static Window *instance = new Window(width, height, title);
@@ -63,12 +64,14 @@ void Window::InitSDL() {
 }
 
 
+/* SETTERS */
+void Window::setCloseRequest() {
+	close_requested = true;
+}
+
 /* GETTERS */
 bool Window::isCloseRequested() {
-	static SDL_Event e;
-	while (SDL_PollEvent(&e))
-		if (e.type == SDL_QUIT) return true;
-	return false;
+	return close_requested;
 }
 
 int Window::getWidth() {

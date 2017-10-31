@@ -14,6 +14,7 @@ public:
 		SDL_Quit();
 	}
 
+	static void setCloseRequest();
 	static bool isCloseRequested();
 	static int getWidth();
 	static int getHeight();
@@ -24,4 +25,5 @@ private:
 	// data
 	static SDL_Window *window_ptr;
 	static SDL_GLContext context;
+	static bool close_requested;
 };
