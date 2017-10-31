@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Time.h"
 #include "Game.h"
+#include "Input.h"
 #include <iostream>
 
 namespace MainComponent {
@@ -53,8 +54,10 @@ namespace MainComponent {
 
 				if (Window::isCloseRequested())
 					stop();
+				
 
 				Time::setDelta(frameTime);
+				Input::update();
 
 				game.input();
 				game.update();
