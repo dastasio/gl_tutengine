@@ -3,33 +3,43 @@
 #include "Time.h"
 #include "Game.h"
 #include "Input.h"
+#include "RenderUtils.h"
 #include <iostream>
 
-namespace MainComponent {
+namespace MainComponent
+{
 	const double FRAME_CAP = 5000.0;
 
 	bool isRunning = false;
 	Game game;
 
-	void cleanUp() {
-		Window::dispose();
+	void start();
+	void stop();
+	void run();
+	void render();
+	void cleanUp();
+}
+
+void MainComponent::start()
+	{
+		if (isRunning)
+			return;
+
+		rutils::initGraphics();
+		run();
 	}
 
-	void render() {
-		game.render();
-		Window::render();
-	}
-
-	void stop() {
+void MainComponent::stop() {
 		if (!isRunning)
 			return;
 
 		isRunning = false;
 	}
 
-	void run() {
+void MainComponent::run()
+	{
 		isRunning = true;
-		
+
 		int frames = 0;
 		long frameCounter = 0;
 
@@ -54,7 +64,7 @@ namespace MainComponent {
 
 				if (Window::isCloseRequested())
 					stop();
-				
+
 
 				Time::setDelta(frameTime);
 				Input::update();
@@ -81,12 +91,15 @@ namespace MainComponent {
 		cleanUp();
 	}
 
-	void start() {
-		if (isRunning)
-			return;
-
-		run();
+void MainComponent::render() {
+		rutils::clearScreen();
+		game.render();
+		Window::render();
 	}
+
+void MainComponent::cleanUp()
+{
+	Window::dispose();
 }
 
 int main() {
