@@ -11,8 +11,9 @@ namespace MainComponent
 	const double FRAME_CAP = 5000.0;
 
 	bool isRunning = false;
-	Game game;
+	Game *game;
 
+	void init();
 	void start();
 	void stop();
 	void run();
@@ -20,12 +21,17 @@ namespace MainComponent
 	void cleanUp();
 }
 
+void MainComponent::init() {
+	rutils::initGraphics();
+	game = new Game();
+}
+
 void MainComponent::start()
 	{
 		if (isRunning)
 			return;
 
-		rutils::initGraphics();
+		init();
 		run();
 	}
 
@@ -69,8 +75,8 @@ void MainComponent::run()
 				Time::setDelta(frameTime);
 				Input::update();
 
-				game.input();
-				game.update();
+				game->input();
+				game->update();
 
 				if (frameCounter >= Time::SECOND) {
 					std::cout << frames << std::endl;
@@ -93,7 +99,7 @@ void MainComponent::run()
 
 void MainComponent::render() {
 		rutils::clearScreen();
-		game.render();
+		game->render();
 		Window::render();
 	}
 

@@ -2,6 +2,26 @@
 #include "Input.h"
 #include <iostream>
 #include "vec3.h"
+#include "ResourceLoader.h"
+
+Game::Game() {
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	mesh = new Mesh();
+	shader = new Shader();
+
+	Vertex data[] = {
+		Vertex(vec3(-1.f, -1.f, 0.f)),
+		Vertex(vec3( 1.f, -1.f, 0.f)),
+		Vertex(vec3( 0.f,  1.f, 0.f))
+	};
+
+	mesh->AddVertices(data, 3);
+	shader->AddVertexShader(ResourceLoader::loadShader("basic.vs"));
+	shader->AddFragmentShader(ResourceLoader::loadShader("basic.fs"));
+}
 
 void Game::input() {
 	if (Input::getKeyDown(SDL_SCANCODE_UP))
@@ -20,4 +40,6 @@ void Game::update() {
 }
 
 void Game::render() {
+	shader->bind();
+	mesh->Draw();
 }
