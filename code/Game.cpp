@@ -3,6 +3,8 @@
 #include <iostream>
 #include "vec3.h"
 #include "ResourceLoader.h"
+#include "Time.h"
+#include <cmath>
 
 Game::Game() {
 	GLuint vao;
@@ -21,6 +23,9 @@ Game::Game() {
 	mesh->AddVertices(data, 3);
 	shader->AddVertexShader(ResourceLoader::loadShader("basic.vs"));
 	shader->AddFragmentShader(ResourceLoader::loadShader("basic.fs"));
+	shader->CompileShader();
+
+	shader->AddUniform("uniformFloat");
 }
 
 void Game::input() {
@@ -36,7 +41,10 @@ void Game::input() {
 }
 
 void Game::update() {
+	static float tmp = 0.f;
+	tmp += Time::getDelta();
 
+	shader->SetUniformf("uniformFloat", std::sinf(tmp) / 2 + 0.5);
 }
 
 void Game::render() {

@@ -20,7 +20,32 @@ void Shader::AddGeometryShader(std::string src) {
 
 void Shader::AddFragmentShader(std::string src) {
 	AddShader(src, GL_FRAGMENT_SHADER);
-	CompileShader();
+}
+
+void Shader::AddUniform(std::string unif) {
+	GLint unifLocation = glGetUniformLocation(program, unif.c_str());
+
+	if (unifLocation == -1) {
+		std::cerr << "[ERROR] Could not find uniform variable '" << unif << "'" << std::endl;
+	}
+
+	uniforms[unif] = unifLocation;
+}
+
+void Shader::SetUniformi(std::string uName, GLint val) {
+	glUniform1i(uniforms[uName], val);
+}
+
+void Shader::SetUniformf(std::string uName, GLfloat val) {
+	glUniform1f(uniforms[uName], val);
+}
+
+void Shader::SetUniform(std::string uName, vec3 &val) {
+	glUniform1fv(uniforms[uName], 1, &val[0]);
+}
+
+void Shader::SetUniform(std::string uName, mat4 &val) {
+	glUniformMatrix4fv(uniforms[uName], 1, GL_FALSE, &val[0][0]);
 }
 
 void Shader::AddShader(std::string src, GLenum type) {
