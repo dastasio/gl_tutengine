@@ -1,6 +1,7 @@
 #pragma once
 #include "Mesh.h"
 #include "Shader.h"
+#include "Transform.h"
 
 class Game {
 public:
@@ -13,4 +14,6 @@ public:
 private:
 	Mesh *mesh;
 	Shader *shader;
+
+	Transform tran;
 };

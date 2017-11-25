@@ -40,11 +40,11 @@ void Shader::SetUniformf(std::string uName, GLfloat val) {
 	glUniform1f(uniforms[uName], val);
 }
 
-void Shader::SetUniform(std::string uName, vec3 &val) {
+void Shader::SetUniform(std::string uName, vec3 val) {
 	glUniform1fv(uniforms[uName], 1, &val[0]);
 }
 
-void Shader::SetUniform(std::string uName, mat4 &val) {
+void Shader::SetUniform(std::string uName, mat4 val) {
 	glUniformMatrix4fv(uniforms[uName], 1, GL_FALSE, &val[0][0]);
 }
 

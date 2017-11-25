@@ -102,5 +102,5 @@ void vec4::operator/= (GLfloat val) {
 }
 
 GLfloat& vec4::operator[] (int i) {
-	return *((GLfloat*)(this) + 1);
+	return *((GLfloat*)(this) + i);
 }

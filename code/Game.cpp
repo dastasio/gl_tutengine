@@ -24,8 +24,9 @@ Game::Game() {
 	shader->AddVertexShader(ResourceLoader::loadShader("basic.vs"));
 	shader->AddFragmentShader(ResourceLoader::loadShader("basic.fs"));
 	shader->CompileShader();
+	shader->bind();
 
-	shader->AddUniform("uniformFloat");
+	shader->AddUniform("transform");
 }
 
 void Game::input() {
@@ -44,10 +45,11 @@ void Game::update() {
 	static float tmp = 0.f;
 	tmp += Time::getDelta();
 
-	shader->SetUniformf("uniformFloat", std::sinf(tmp) / 2 + 0.5);
+	tran.setPosition(std::sinf(tmp), 0, 0);
 }
 
 void Game::render() {
+	shader->SetUniform("transform", tran.getTransform());
 	shader->bind();
 	mesh->Draw();
 }

@@ -25,6 +25,13 @@ mat4::mat4(
 	m[3] = vec4(x3, y3, z3, w3);
 }
 
+void mat4::initTranslation(vec3 &t_) {
+	m[0] = vec4(1.f, 0.f, 0.f, 0.f);
+	m[1] = vec4(0.f, 1.f, 0.f, 0.f);
+	m[2] = vec4(0.f, 0.f, 1.f, 0.f);
+	m[3] = vec4(t_, 1.f);
+}
+
 vec4& mat4::operator[] (int i) {
 	return m[i];
 }
