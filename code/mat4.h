@@ -12,7 +12,10 @@ struct mat4 {
 		GLfloat y0, GLfloat y1, GLfloat y2, GLfloat y3,
 		GLfloat z0, GLfloat z1, GLfloat z2, GLfloat z3,
 		GLfloat w0, GLfloat w1, GLfloat w2, GLfloat w3);
+	
 	void initTranslation(vec3 &t_);
+	void initRotation(vec3 &r_);
+	void initScale(vec3 &s_);
 
 	mat4 transpose();
 

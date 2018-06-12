@@ -45,7 +45,9 @@ void Game::update() {
 	static float tmp = 0.f;
 	tmp += Time::getDelta();
 
-	tran.setPosition(std::sinf(tmp), 0, 0);
+	tran.setPosition(0.8, 0, 0);
+	tran.setRotation(0, 0, std::sinf(tmp) * 180);
+	//tran.setScale(vec3(std::sinf(tmp)));
 }
 
 void Game::render() {
