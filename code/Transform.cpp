@@ -60,5 +60,5 @@ mat4 Transform::getTransform() {
 	r.initRotation(rotation);
 	s.initScale(scale);
 
-	return t * r * s;// s * r * t;
+	return t * r * s;
 }

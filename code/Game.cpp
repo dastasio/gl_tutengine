@@ -11,16 +11,10 @@ Game::Game() {
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	mesh = new Mesh();
+	mesh = ResourceLoader::loadMesh("cube.obj");
 	shader = new Shader();
 
-	Vertex data[] = {
-		Vertex(vec3(-1.f, -1.f, 0.f)),
-		Vertex(vec3( 1.f, -1.f, 0.f)),
-		Vertex(vec3( 0.f,  1.f, 0.f))
-	};
-
-	mesh->AddVertices(data, 3);
+	
 	shader->AddVertexShader(ResourceLoader::loadShader("basic.vs"));
 	shader->AddFragmentShader(ResourceLoader::loadShader("basic.fs"));
 	shader->CompileShader();
@@ -45,9 +39,9 @@ void Game::update() {
 	static float tmp = 0.f;
 	tmp += Time::getDelta();
 
-	tran.setPosition(0.8, 0, 0);
-	tran.setRotation(0, 0, std::sinf(tmp) * 180);
-	//tran.setScale(vec3(std::sinf(tmp)));
+	tran.setPosition(0, 0, 0);
+	tran.setRotation(2 * M_PI * std::sinf(tmp), 2 * M_PI * std::sinf(tmp), 0);
+	tran.setScale(std::sinf(tmp));
 }
 
 void Game::render() {

@@ -26,82 +26,79 @@ void MainComponent::init() {
 	game = new Game();
 }
 
-void MainComponent::start()
-	{
-		if (isRunning)
-			return;
+void MainComponent::start() {
+	if (isRunning)
+		return;
 
-		init();
-		run();
-	}
+	isRunning = true;
+	init();
+	run();
+}
 
 void MainComponent::stop() {
-		if (!isRunning)
-			return;
+	if (!isRunning)
+		return;
 
-		isRunning = false;
-	}
+	isRunning = false;
+}
 
-void MainComponent::run()
-	{
-		isRunning = true;
+void MainComponent::run() {
+	int frames = 0;
+	long frameCounter = 0;
 
-		int frames = 0;
-		long frameCounter = 0;
+	const double frameTime = 1.0 / FRAME_CAP;
 
-		const double frameTime = 1.0 / FRAME_CAP;
+	long lastTime = Time::getTime();
+	double unprocessedTime = 0.0;
 
-		long lastTime = Time::getTime();
-		double unprocessedTime = 0.0;
+	while (isRunning) {
+		bool shouldRender = false;
 
-		while (isRunning) {
-			bool shouldRender = false;
+		long startTime = Time::getTime();
+		long passedTime = startTime - lastTime;
+		lastTime = startTime;
 
-			long startTime = Time::getTime();
-			long passedTime = startTime - lastTime;
-			lastTime = startTime;
+		unprocessedTime += passedTime / (double)Time::SECOND;
+		frameCounter += passedTime;
 
-			unprocessedTime += passedTime / (double)Time::SECOND;
-			frameCounter += passedTime;
+		while (unprocessedTime > frameTime) {
+			shouldRender = true;
+			unprocessedTime -= frameTime;
 
-			while (unprocessedTime > frameTime) {
-				shouldRender = true;
-				unprocessedTime -= frameTime;
-
-				if (Window::isCloseRequested())
-					stop();
+			if (Window::isCloseRequested())
+				stop();
 
 
-				Time::setDelta(frameTime);
-				Input::update();
+			Time::setDelta(frameTime);
+			Input::update();
 
-				game->input();
-				game->update();
+			game->input();
+			game->update();
 
-				if (frameCounter >= Time::SECOND) {
-					std::cout << frames << std::endl;
-					frames = 0;
-					frameCounter = 0;
-				}
-			}
-
-			if (shouldRender) {
-				render();
-				frames++;
-			}
-			else {
-				SDL_Delay(1000);
+			if (frameCounter >= Time::SECOND) {
+				std::cout << frames << std::endl;
+				frames = 0;
+				frameCounter = 0;
 			}
 		}
 
-		cleanUp();
+		if (shouldRender) {
+			render();
+			frames++;
+		}
+		else {
+			SDL_Delay(1000);
+		}
 	}
 
+	cleanUp();
+}
+
 void MainComponent::render() {
-		rutils::clearScreen();
-		game->render();
-		Window::render();
-	}
+	rutils::clearScreen();
+	game->render();
+	Window::render();
+}
 
 void MainComponent::cleanUp()
 {
