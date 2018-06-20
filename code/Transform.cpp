@@ -1,9 +1,15 @@
 #include "Transform.h"
 
+mat4 Transform::projection;
+
 Transform::Transform() {
 	translation = vec3(0.f);
 	rotation = vec3(0.f);
 	scale = vec3(1.f);
+}
+
+void Transform::setProjection(float fov_, float w_, float h_, float zn_, float zf_) {
+	projection.initProjection(fov_, w_ / h_, zn_, zf_);
 }
 
 void Transform::setPosition(vec3 p_) {
@@ -61,4 +67,8 @@ mat4 Transform::getTransform() {
 	s.initScale(scale);
 
 	return t * r * s;
+}
+
+mat4 Transform::getProjectedTransform() {
+	return Transform::projection * getTransform();
 }

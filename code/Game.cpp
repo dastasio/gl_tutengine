@@ -21,6 +21,7 @@ Game::Game() {
 	shader->bind();
 
 	shader->AddUniform("transform");
+	Transform::setProjection(45.f, 1280, 720, 0.1f, 100.f);
 }
 
 void Game::input() {
@@ -39,13 +40,13 @@ void Game::update() {
 	static float tmp = 0.f;
 	tmp += Time::getDelta();
 
-	tran.setPosition(0, 0, 0);
-	tran.setRotation(2 * M_PI * std::sinf(tmp), 2 * M_PI * std::sinf(tmp), 0);
-	tran.setScale(std::sinf(tmp));
+	tran.setPosition(0, 0, 5);
+	tran.setRotation(0, 180 * std::sinf(tmp), 0);
+	//tran.setScale(std::sinf(tmp));
 }
 
 void Game::render() {
-	shader->SetUniform("transform", tran.getTransform());
+	shader->SetUniform("transform", tran.getProjectedTransform());
 	shader->bind();
 	mesh->Draw();
 }

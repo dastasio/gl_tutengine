@@ -6,6 +6,10 @@ class Transform {
 public:
 	Transform();
 
+	static void setProjection(float fov_,
+							  float w_,  float h_, 
+							  float zn_, float zf_);
+
 	void setPosition(vec3 p_);
 	void setPosition(GLfloat x, GLfloat y, GLfloat z);
 	void setRotation(vec3 r_);
@@ -20,8 +24,10 @@ public:
 	void resize(GLfloat x, GLfloat y, GLfloat z);
 
 	mat4 getTransform();
+	mat4 getProjectedTransform();
 private:
 	vec3 translation;
 	vec3 rotation;
 	vec3 scale;
+	static mat4 projection;
 };

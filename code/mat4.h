@@ -2,6 +2,7 @@
 #include "oglin.h"
 #include "vec4.h"
 
+// column first 4x4 matrix
 struct mat4 {
 	vec4 m[4];
 
@@ -16,6 +17,8 @@ struct mat4 {
 	void initTranslation(vec3 &t_);
 	void initRotation(vec3 &r_);
 	void initScale(vec3 &s_);
+	void initProjection(GLfloat fov_, GLfloat ar_,
+						GLfloat zn_, GLfloat zf_);
 
 	mat4 transpose();
 
