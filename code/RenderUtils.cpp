@@ -9,7 +9,7 @@ void rutils::initGraphics() {
 	glClearColor(0.f, 0.f, 0.f, 0.f);
 
 	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
+	glFrontFace(GL_CW);
 	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
